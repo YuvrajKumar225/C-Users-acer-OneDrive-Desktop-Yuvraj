@@ -1,0 +1,76 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public int height;
+}
+class Solution {
+    Node root;
+    public Solution(){
+       this.root=null;
+    }
+    public boolean checkTree(Node root) {
+        if (root.left.val + root.right.val == root.val) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void levelOrder(){
+        Queue<Node> queue=new LinkedList<Node>();
+        queue.add(root);
+       while(!queue.isEmpty()){
+        Node temp=queue.remove();
+        System.out.print(temp.val + " ");
+        if(temp.left!=null){
+            queue.add(temp.left);
+        }
+        if(temp.right!=null){
+            queue.add(temp.right);
+        }
+       }
+    }
+    public void insert(int value){
+        Node node=new Node();
+        node.val=value;
+        if(root==null){
+            root=node;
+            System.out.println("Inserted new node at root");
+            return;
+        }
+        Queue<Node> queue=new LinkedList<Node>();
+        queue.add(root);
+       while(!queue.isEmpty()){
+        Node temp=queue.remove();
+        if(temp.left==null){
+            temp.left=node;
+            System.out.println("Successfully inserted");
+            break;
+            }
+            else if(temp.right==null){
+                temp.right=node;
+                System.out.println("Successfully inserted");
+                break;
+            }
+            else{
+                queue.add(temp.left);
+                queue.add(temp.right);
+            }
+       }
+    }
+}
+public class demo {
+    public static void main(String[] args) {
+
+        Solution s = new Solution();
+        s.insert(10);
+        s.insert(6);
+        s.insert(4);
+        s.levelOrder();
+        System.out.println();
+        System.out.println( s.checkTree(s.root));
+    }
+}
